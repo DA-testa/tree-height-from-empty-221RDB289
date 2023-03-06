@@ -61,7 +61,7 @@ def main():
         # account for github input inprecision
         file_name = input()
         if 'a' not in file_name:
-            f = open(file_name, 'r')
+            f = open('test/'+file_name, 'r')
             text = f.read().split('\n')
             f.close()
             # input number of elements
