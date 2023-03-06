@@ -10,39 +10,28 @@ def compute_height(n, parents):
     # Write this function
     # Your code here
 
-    v = parents # values
-    h = numpy.zeros(n) # heights
-    c = numpy.zeros(n) # checked nodes
+    tree = [[] for _ in range(n)]
 
     i = 0
-    while 0 <= i and i <= n-1:
-        temp = []
-        j = i
-        increase = None
-        while(True):
-            if int(v[j]) == -1:
-                increase = 1
-                break
-            elif c[j] == 2:
-                increase = h[j]
-                break
-            elif c[j] == 1 or c[j] == 0:
-                temp.append(j)
-                for t in temp:
-                    if c[t] != 2:
-                        h[t] += 1
-                j = int(v[j])
-                
-        if increase:
-            for t in temp:
-                if c[t] == 1 or c[t] == 0:
-                    c[t] = 2
-                    h[t] += increase
+    for parent in parents:
+        if parent != '-1':
+            tree[int(parent)].append(i)
+        else:
+            root = i
+        i += 1
 
-        i+=1
+    stack = [(root, 0)]
+    max_height = 0
+    while stack:
+        node, height = stack.pop()
 
+        if height > max_height:
+            max_height = height
 
-    return int(numpy.max(h))
+        for child in tree[node]:
+            stack.append((child, height + 1))
+
+    return max_height + 1
 
 
 def main():
